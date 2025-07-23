@@ -22,19 +22,26 @@ app.get("/", (req,res) => {
     res.sendFile(absolutePath)
     });
 
-    app.get("/json", (req,res) => {
-        const style=process.env.MESSAGE_STYLE;
-        if(style=='uppercase') {
-            res.json({"message": "HELLO JSON"});
-        }
-        else {
-            res.json({"message": "Hello json"});
-        }        
-    })
+app.get("/json", (req,res) => {
+    const style=process.env.MESSAGE_STYLE;
+    if(style=='uppercase') {
+        res.json({"message": "HELLO JSON"});
+    }
+    else {
+        res.json({"message": "Hello json"});
+    }
+})
 
+app.get('/now', function(req, res, next) {
+    req.time=new Date().toString();
+    next();
+}, function(req,res) {
+    res.json({time: req.time})
+})
 
-
-
+app.get('/:word/echo',function(req,res) {
+    res.json({echo: req.params.word})
+})
 
 
 
